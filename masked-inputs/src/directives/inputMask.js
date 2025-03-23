@@ -141,17 +141,11 @@ function formatMixed(value) {
     .replace(/[^A-Z0-9]/g, '')
     .slice(0, maxLength)
 
-  if (value.length <= 3) {
-    return value.replace(/[^A-Z]/, '')
-  }
-  if (value.length <= 6) {
-    const validValue = value.slice(0, 3) + value.slice(3, 6).replace(/\D/g, '')
-    return validValue.replace(/^([A-Z]{3})(\d{1,3})/, '$1 $2')
-  }
-  if (value.length <= 9) {
-    const validValue = value.slice(0, 6) + value.slice(6).replace(/[^A-Z]/, '')
-    return validValue.replace(/^([A-Z]{3})(\d{3})([A-Z]{0,3})/, '$1 $2-$3')
-  }
+  const prefix = value.slice(0, 3).replace(/[^A-Z]/g, '')
+  const middle = value.slice(3, 6).replace(/\D/g, '')
+  const suffix = value.slice(6, 9).replace(/[^A-Z]/g, '')
+
+  return `${prefix} ${middle}${suffix ? '-' + suffix : ''}`.trim()
 }
 
 function formatIpAddress(value) {
