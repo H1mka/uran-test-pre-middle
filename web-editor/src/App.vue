@@ -1,9 +1,17 @@
 <template>
-  <main>test</main>
+  <main>
+    <TextEditor />
+  </main>
 </template>
 
 <script>
-export default {}
+import TextEditor from '@/components/editor/TextEditor.vue'
+
+export default {
+  components: {
+    TextEditor
+  }
+}
 </script>
 
 <style lang="scss" scoped></style>
