@@ -24,10 +24,6 @@ const inputMask = {
 
     el.placeholder = maskedValues[binding.arg] || ''
     el.addEventListener('input', onInputChange)
-  },
-
-  unmounted(el, binding) {
-    el.removeEventListener('input', onInputChange)
   }
 }
 
