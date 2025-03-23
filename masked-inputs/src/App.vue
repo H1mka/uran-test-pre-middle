@@ -1,9 +1,15 @@
 <template>
-  <main>test</main>
+  <main>
+    <InputsForm />
+  </main>
 </template>
 
 <script>
-export default {}
+import InputsForm from '@/components/forms/InputsForm.vue'
+
+export default {
+  components: { InputsForm }
+}
 </script>
 
 <style scoped></style>
