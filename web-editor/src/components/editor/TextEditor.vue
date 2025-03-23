@@ -3,32 +3,13 @@
     <div class="editor-actions">
       <div class="left-side">
         <button
+          v-for="(button, index) in editorActions"
           class="editor-action-btn"
-          :class="{ isActive: isActiveButton('bold') }"
-          @click="applyCommand('bold')"
+          :key="index"
+          :class="{ isActive: isActiveButton(button.command) }"
+          @click="applyCommand(button.command)"
         >
-          Bold
-        </button>
-        <button
-          class="editor-action-btn"
-          :class="{ isActive: isActiveButton('italic') }"
-          @click="applyCommand('italic')"
-        >
-          Italic
-        </button>
-        <button
-          class="editor-action-btn"
-          :class="{ isActive: isActiveButton('insertUnorderedList') }"
-          @click="applyCommand('insertUnorderedList')"
-        >
-          Unordered list
-        </button>
-        <button
-          class="editor-action-btn"
-          :class="{ isActive: isActiveButton('insertOrderedList') }"
-          @click="applyCommand('insertOrderedList')"
-        >
-          Ordered list
+          {{ button.label }}
         </button>
         <button class="editor-action-btn" @click="createLink">
           Create link
@@ -55,6 +36,7 @@
 <script>
 import { LocalStorageService } from '@/api'
 import { TEXT_EDITOR_STORAGE_NAME } from '@/constants/constants'
+import { helper } from '@/helpers/helper'
 
 export default {
   data: () => ({
@@ -63,7 +45,13 @@ export default {
       italic: false,
       insertUnorderedList: false,
       insertOrderedList: false
-    }
+    },
+    editorActions: [
+      { command: 'bold', label: 'Bold' },
+      { command: 'italic', label: 'Italic' },
+      { command: 'insertUnorderedList', label: 'Unordered list' },
+      { command: 'insertOrderedList', label: 'Ordered list' }
+    ]
   }),
   mounted() {
     this.getText()
@@ -92,12 +80,8 @@ export default {
     },
     handleEditorClick(event) {
       if (event.target.tagName === 'A') {
-        this.openLinkInNewTab(event.target)
+        helper.openLinkInNewTab(event.target)
       }
-    },
-    openLinkInNewTab(link) {
-      const url = link.getAttribute('href')
-      if (url) window.open(url, '_blank')
     },
     saveText() {
       const text = this.$refs.editorContent.innerHTML || ''
